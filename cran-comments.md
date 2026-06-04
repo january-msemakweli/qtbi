@@ -25,4 +25,7 @@ Resubmission addressing CRAN incoming feedback from 2026-05-30 and win-builder p
 **2026-06-01 (Konstanze Lauseker):**
 * Removed `\dontrun{}` from all examples: `estimate_qtbi()` now uses a small runnable data frame; `qtbi_help()` examples run as written.
 
+**2026-06-04 (CRAN incoming pre-test):**
+* Added `.Rbuildignore` so `cran-comments.md`, `submit_cran.R`, `dist/`, and `illustration/` are excluded from the CRAN source tarball (they remain in the GitHub repository).
+
 There are no downstream dependencies on CRAN.

@@ -1,0 +1,8 @@
+^cran-comments\.md$
+^submit_cran\.R$
+^dist$
+^illustration$
+^build$
+^qtbi\.Rcheck$
+^.*\.tar\.gz$
+^\.git$
