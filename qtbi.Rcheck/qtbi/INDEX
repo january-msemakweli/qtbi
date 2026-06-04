@@ -1,0 +1,27 @@
+build_statevector       Build the n-qubit entanglement statevector for
+                        one subject
+circuit_gate_schedule   Gate schedule for circuit diagrams
+diagnose_qtbi           Diagnose QTBI encoder behavior on processed
+                        data
+estimate_qtbi           Estimate QTBI and append scores to a data frame
+exposure_percentile     Convert exposures to within-cohort percentiles
+is_qtbi_data            Test for a qtbi_data object
+marginal_toxic_probs    Marginal toxic probabilities from a QTBI
+                        statevector
+normalize_potency_weights
+                        Rescale potency weights to match the unweighted
+                        QTBI scale
+percentile_matrix       Build percentile matrix from a data frame
+potency_weights_from_reference_doses
+                        Derive relative potency weights from reference
+                        doses
+qtbi_from_pcts          Compute QTBI from percentile matrix
+qtbi_from_state         Compute QTBI from a statevector
+qtbi_from_vector        Compute QTBI from one percentile vector
+qtbi_help               Package help index for qtbi
+qtbi_meta               Retrieve QTBI metadata stored on a processed
+                        data frame
+synergy_diagnostics     Full circuit diagnostics for a cohort
+                        percentile matrix
+synergy_sensitivity     Synergy sensitivity on cohort median
+                        percentiles

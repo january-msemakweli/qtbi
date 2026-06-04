@@ -1,0 +1,581 @@
+\nonstopmode{}
+\documentclass[a4paper]{book}
+\usepackage[times,inconsolata,hyper]{Rd}
+\usepackage{makeidx}
+\makeatletter\@ifl@t@r\fmtversion{2018/04/01}{}{\usepackage[utf8]{inputenc}}\makeatother
+% \usepackage{graphicx} % @USE GRAPHICX@
+\makeindex{}
+\begin{document}
+\chapter*{}
+\begin{center}
+{\textbf{\huge Package `qtbi'}}
+\par\bigskip{\large \today}
+\end{center}
+\ifthenelse{\boolean{Rd@use@hyper}}{\hypersetup{pdftitle = {qtbi: Quantum Toxic Burden Index}}}{}
+\ifthenelse{\boolean{Rd@use@hyper}}{\hypersetup{pdfauthor = {January G. Msemakweli}}}{}
+\begin{description}
+\raggedright{}
+\item[Title]\AsIs{Quantum Toxic Burden Index}
+\item[Version]\AsIs{0.1.2}
+\item[Description]\AsIs{Compute the Quantum Toxic Burden Index from multi-exposure
+panels using a fixed quantum-inspired entanglement encoder; method
+reference (2026) <}\Rhref{https://doi.org/10.5281/zenodo.20476574}{doi:10.5281/zenodo.20476574}\AsIs{>. Provides percentile
+encoding, optional potency-weighted readout, and synergy diagnostics
+for environmental mixture burden scores.}
+\item[License]\AsIs{MIT + file LICENSE}
+\item[URL]\AsIs{}\url{https://github.com/january-msemakweli/qtbi}\AsIs{,
+}\url{https://doi.org/10.5281/zenodo.20476574}\AsIs{}
+\item[BugReports]\AsIs{}\url{https://github.com/january-msemakweli/qtbi/issues}\AsIs{}
+\item[Encoding]\AsIs{UTF-8}
+\item[Language]\AsIs{en-US}
+\item[Roxygen]\AsIs{list(markdown = TRUE)}
+\item[RoxygenNote]\AsIs{7.3.3}
+\item[Depends]\AsIs{R (>= 4.1.0)}
+\item[Suggests]\AsIs{testthat (>= 3.0.0)}
+\item[Config/testthat/edition]\AsIs{3}
+\item[NeedsCompilation]\AsIs{no}
+\item[Author]\AsIs{January G. Msemakweli [aut, cre]}
+\item[Maintainer]\AsIs{January G. Msemakweli }\email{jmsemak1@jh.edu}\AsIs{}
+\end{description}
+\Rdcontents{Contents}
+\HeaderA{qtbi-package}{Quantum Toxic Burden Index}{qtbi.Rdash.package}
+\aliasA{qtbi}{qtbi-package}{qtbi}
+\keyword{internal}{qtbi-package}
+%
+\begin{Description}
+Compute the Quantum Toxic Burden Index (QTBI) from multi-exposure panels
+using a fixed quantum-inspired entanglement encoder.
+\end{Description}
+%
+\begin{Section}{Typical workflow}
+
+\begin{itemize}
+
+\item{} \code{\LinkA{estimate\_qtbi()}{estimate.Rul.qtbi}} adds percentile and QTBI columns to your data frame.
+\item{} Optional \code{reference\_doses} enable potency-weighted readout at the index step.
+Weights are rescaled automatically so weighted QTBI stays on the same
+\AsIs{\texttt{[0, n]}} scale as the unweighted index.
+\item{} \code{\LinkA{diagnose\_qtbi()}{diagnose.Rul.qtbi}} summarizes synergy sensitivity and monotonicity.
+
+\end{itemize}
+
+\end{Section}
+%
+\begin{Author}
+\strong{Maintainer}: January G. Msemakweli \email{jmsemak1@jh.edu}
+
+\end{Author}
+%
+\begin{SeeAlso}
+Useful links:
+\begin{itemize}
+
+\item{} \url{https://github.com/january-msemakweli/qtbi}
+\item{} \Rhref{https://doi.org/10.5281/zenodo.20476574}{doi:10.5281\slash{}zenodo.20476574}
+\item{} Report bugs at \url{https://github.com/january-msemakweli/qtbi/issues}
+
+\end{itemize}
+
+
+\end{SeeAlso}
+\HeaderA{build\_statevector}{Build the n-qubit entanglement statevector for one subject}{build.Rul.statevector}
+%
+\begin{Description}
+Build the n-qubit entanglement statevector for one subject
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+build_statevector(percentiles, synergy = 0.6)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{percentiles}] Numeric vector of exposure percentiles in \AsIs{\texttt{[0, 1]}}.
+
+\item[\code{synergy}] Synergy strength in \AsIs{\texttt{[0, 1]}}.
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+Complex statevector of length \code{2\textasciicircum{}n}.
+\end{Value}
+\HeaderA{circuit\_gate\_schedule}{Gate schedule for circuit diagrams}{circuit.Rul.gate.Rul.schedule}
+%
+\begin{Description}
+Gate schedule for circuit diagrams
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+circuit_gate_schedule(n_exposures = 4L, n_metals = NULL)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{n\_exposures}] Number of exposures (qubits).
+
+\item[\code{n\_metals}] Deprecated alias for \code{n\_exposures}.
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+List with gate schedule metadata.
+\end{Value}
+\HeaderA{diagnose\_qtbi}{Diagnose QTBI encoder behavior on processed data}{diagnose.Rul.qtbi}
+%
+\begin{Description}
+Diagnose QTBI encoder behavior on processed data
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+diagnose_qtbi(
+  data,
+  synergy_grid = seq(0, 1, by = 0.05),
+  synergy_ref = NULL,
+  verbose = TRUE
+)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{data}] A \code{qtbi\_data} object from \code{\LinkA{estimate\_qtbi()}{estimate.Rul.qtbi}}.
+
+\item[\code{synergy\_grid}] Grid of synergy values for sensitivity curves.
+
+\item[\code{synergy\_ref}] Reference synergy for summary statistics (defaults to
+the value used in \code{\LinkA{estimate\_qtbi()}{estimate.Rul.qtbi}}).
+
+\item[\code{verbose}] If \code{TRUE}, print a concise summary.
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+A \code{qtbi\_diagnosis} object (also printed when \code{verbose = TRUE}).
+\end{Value}
+\HeaderA{estimate\_qtbi}{Estimate QTBI and append scores to a data frame}{estimate.Rul.qtbi}
+%
+\begin{Description}
+Computes within-cohort exposure percentiles, runs the fixed entanglement
+encoder, and returns the input data with percentile and QTBI columns added.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+estimate_qtbi(
+  data,
+  chemicals,
+  synergy_strength = 0.6,
+  qtbi_col = "qtbi",
+  percentile_prefix = "pct_",
+  exposure_names = NULL,
+  pct_cols = NULL,
+  reference_doses = NULL,
+  reference_index = NULL
+)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{data}] A data frame containing exposure columns.
+
+\item[\code{chemicals}] Character vector of exposure column names.
+
+\item[\code{synergy\_strength}] Synergy strength in \AsIs{\texttt{[0, 1]}}.
+
+\item[\code{qtbi\_col}] Name for the QTBI score column (default \code{"qtbi"}).
+
+\item[\code{percentile\_prefix}] Prefix for percentile columns (default \code{"pct\_"}).
+
+\item[\code{exposure\_names}] Optional display names for plots (defaults to \code{chemicals}).
+
+\item[\code{pct\_cols}] Optional percentile column names (same length as \code{chemicals}).
+
+\item[\code{reference\_doses}] Optional named numeric vector of oral reference doses
+in mg/kg/day, with names matching \code{exposure\_names} (or \code{chemicals} if
+\code{exposure\_names} is omitted). The package derives potency weights as
+\code{reference\_index} dose divided by each component dose, rescales them so
+their sum equals the number of exposures (keeping QTBI on the same
+\eqn{[0, n]}{} scale as the unweighted index), and applies them at readout only.
+
+\item[\code{reference\_index}] Name of the index chemical for potency ratios. Defaults
+to the first \code{exposure\_names} entry (or first \code{chemicals} entry).
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+A \code{qtbi\_data} object (data frame) with QTBI and percentile columns.
+\end{Value}
+%
+\begin{Examples}
+\begin{ExampleCode}
+df <- data.frame(
+  Pb = c(1, 2, 3, 4),
+  As = c(4, 3, 2, 1),
+  Cd = c(2, 2, 3, 3),
+  Hg = c(1, 3, 2, 4)
+)
+out <- estimate_qtbi(
+  df,
+  chemicals = c("Pb", "As", "Cd", "Hg"),
+  synergy_strength = 0.6,
+  reference_doses = c(Pb = 6.3e-4, As = 6.0e-5, Cd = 5.0e-4, Hg = 1.0e-4),
+  reference_index = "Pb"
+)
+out$qtbi
+\end{ExampleCode}
+\end{Examples}
+\HeaderA{exposure\_percentile}{Convert exposures to within-cohort percentiles}{exposure.Rul.percentile}
+%
+\begin{Description}
+Convert exposures to within-cohort percentiles
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+exposure_percentile(x)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{x}] Numeric exposure vector.
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+Numeric percentiles in \AsIs{\texttt{(0, 1]}}.
+\end{Value}
+\HeaderA{is\_qtbi\_data}{Test for a qtbi\_data object}{is.Rul.qtbi.Rul.data}
+%
+\begin{Description}
+Test for a qtbi\_data object
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+is_qtbi_data(x)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{x}] Object to test.
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+\code{TRUE} if \code{x} inherits from \code{"qtbi\_data"}.
+\end{Value}
+\HeaderA{marginal\_toxic\_probs}{Marginal toxic probabilities from a QTBI statevector}{marginal.Rul.toxic.Rul.probs}
+%
+\begin{Description}
+Marginal toxic probabilities from a QTBI statevector
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+marginal_toxic_probs(state)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{state}] Complex statevector from \code{\LinkA{build\_statevector()}{build.Rul.statevector}}.
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+Numeric vector of marginal toxic probabilities.
+\end{Value}
+\HeaderA{normalize\_potency\_weights}{Rescale potency weights to match the unweighted QTBI scale}{normalize.Rul.potency.Rul.weights}
+%
+\begin{Description}
+When potency weights are applied at readout, rescale them so their sum equals
+the number of exposures in the panel. This keeps weighted QTBI on the same
+\eqn{[0, n]}{} scale as the unweighted sum of marginals, which aids comparison
+between weighted and unweighted analyses.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+normalize_potency_weights(weights, target_sum = NULL)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{weights}] Named numeric vector of raw potency ratios from
+\code{\LinkA{potency\_weights\_from\_reference\_doses()}{potency.Rul.weights.Rul.from.Rul.reference.Rul.doses}}.
+
+\item[\code{target\_sum}] Target sum for the rescaled weights. Defaults to the
+number of exposures (\code{length(weights)}).
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+Named numeric vector of rescaled weights aligned with \code{weights}.
+\end{Value}
+\HeaderA{percentile\_matrix}{Build percentile matrix from a data frame}{percentile.Rul.matrix}
+%
+\begin{Description}
+Build percentile matrix from a data frame
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+percentile_matrix(data, chemicals)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{data}] Data frame containing exposure columns.
+
+\item[\code{chemicals}] Character vector of column names.
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+Numeric matrix with one percentile column per chemical.
+\end{Value}
+\HeaderA{potency\_weights\_from\_reference\_doses}{Derive relative potency weights from reference doses}{potency.Rul.weights.Rul.from.Rul.reference.Rul.doses}
+%
+\begin{Description}
+Computes outcome-independent weights as the ratio of the index chemical
+reference dose to each component reference dose:
+\deqn{w_i = \mathrm{RfD}_{\mathrm{index}} / \mathrm{RfD}_i}{}
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+potency_weights_from_reference_doses(
+  reference_doses,
+  chemicals,
+  reference_index = NULL
+)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{reference\_doses}] Named numeric vector of oral reference doses in
+mg/kg/day, with one value per exposure in \code{chemicals}.
+
+\item[\code{chemicals}] Character vector of exposure identifiers in panel order.
+Names must match \code{names(reference\_doses)}.
+
+\item[\code{reference\_index}] Name of the index chemical. Defaults to the first
+entry in \code{chemicals}.
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Details}
+Lower reference doses (more potent toxicants) receive larger weights.
+\end{Details}
+%
+\begin{Value}
+Named numeric vector of potency weights aligned with \code{chemicals}.
+\end{Value}
+\HeaderA{qtbi\_from\_pcts}{Compute QTBI from percentile matrix}{qtbi.Rul.from.Rul.pcts}
+%
+\begin{Description}
+Compute QTBI from percentile matrix
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+qtbi_from_pcts(pct_mat, synergy = 0.6, weights = NULL)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{pct\_mat}] Numeric matrix of within-cohort percentiles (rows = subjects).
+
+\item[\code{synergy}] Synergy strength in \AsIs{\texttt{[0, 1]}}.
+
+\item[\code{weights}] Optional named numeric potency weights aligned with columns.
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+Numeric vector of QTBI scores.
+\end{Value}
+\HeaderA{qtbi\_from\_state}{Compute QTBI from a statevector}{qtbi.Rul.from.Rul.state}
+%
+\begin{Description}
+Compute QTBI from a statevector
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+qtbi_from_state(state, weights = NULL)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{state}] Complex statevector from \code{\LinkA{build\_statevector()}{build.Rul.statevector}}.
+
+\item[\code{weights}] Optional named numeric potency weights aligned with qubits.
+When \code{NULL}, marginals are summed with equal weight.
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+Scalar QTBI score (sum of marginal toxic probabilities).
+\end{Value}
+\HeaderA{qtbi\_from\_vector}{Compute QTBI from one percentile vector}{qtbi.Rul.from.Rul.vector}
+%
+\begin{Description}
+Compute QTBI from one percentile vector
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+qtbi_from_vector(pct_vec, synergy = 0.6, weights = NULL)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{pct\_vec}] Numeric vector of within-cohort percentiles.
+
+\item[\code{synergy}] Synergy strength in \AsIs{\texttt{[0, 1]}}.
+
+\item[\code{weights}] Optional named numeric potency weights aligned with \code{pct\_vec}.
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+Scalar QTBI score.
+\end{Value}
+\HeaderA{qtbi\_help}{Package help index for qtbi}{qtbi.Rul.help}
+%
+\begin{Description}
+Prints a topic index for the main \strong{qtbi} functions and optionally opens
+documentation for a specific topic. Use this when you want a guided entry
+point to the package; standard R help remains available via \code{?function\_name}
+and \code{help(package = "qtbi")}.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+qtbi_help(topic = NULL)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{topic}] Optional character string naming a function or topic to open.
+If omitted, a summary index is printed.
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+Invisibly returns \code{NULL}. When \code{topic} is supplied, the corresponding
+help page is opened as a side effect.
+\end{Value}
+%
+\begin{Examples}
+\begin{ExampleCode}
+qtbi_help()
+qtbi_help("estimate_qtbi")
+\end{ExampleCode}
+\end{Examples}
+\HeaderA{qtbi\_meta}{Retrieve QTBI metadata stored on a processed data frame}{qtbi.Rul.meta}
+%
+\begin{Description}
+Retrieve QTBI metadata stored on a processed data frame
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+qtbi_meta(data)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{data}] A \code{qtbi\_data} object from \code{\LinkA{estimate\_qtbi()}{estimate.Rul.qtbi}}.
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+List with chemicals, synergy strength, and percentile column names.
+\end{Value}
+\HeaderA{synergy\_diagnostics}{Full circuit diagnostics for a cohort percentile matrix}{synergy.Rul.diagnostics}
+%
+\begin{Description}
+Full circuit diagnostics for a cohort percentile matrix
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+synergy_diagnostics(
+  pct_mat,
+  synergy_grid = seq(0, 1, by = 0.05),
+  synergy_ref = 0.6,
+  exposure_names = NULL,
+  metal_names = NULL,
+  weights = NULL
+)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{pct\_mat}] Numeric matrix of within-cohort percentiles (rows = subjects).
+
+\item[\code{synergy\_grid}] Grid of synergy values in \AsIs{\texttt{[0, 1]}}.
+
+\item[\code{synergy\_ref}] Reference synergy for summary statistics.
+
+\item[\code{exposure\_names}] Labels for exposures (columns of \code{pct\_mat}).
+
+\item[\code{metal\_names}] Deprecated alias for \code{exposure\_names}.
+
+\item[\code{weights}] Optional potency weights aligned with columns of \code{pct\_mat}.
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+List with cohort\_band, marginals, monotonicity, synergy\_ref, sens\_ref.
+\end{Value}
+\HeaderA{synergy\_sensitivity}{Synergy sensitivity on cohort median percentiles}{synergy.Rul.sensitivity}
+%
+\begin{Description}
+Synergy sensitivity on cohort median percentiles
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+synergy_sensitivity(
+  pct_mat,
+  synergy_grid = seq(0, 1, by = 0.05),
+  weights = NULL
+)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{pct\_mat}] Numeric matrix of within-cohort percentiles.
+
+\item[\code{synergy\_grid}] Grid of synergy values in \AsIs{\texttt{[0, 1]}}.
+
+\item[\code{weights}] Optional potency weights aligned with columns of \code{pct\_mat}.
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+Data frame with synergy, qtbi, and additive\_baseline columns.
+\end{Value}
+\printindex{}
+\end{document}

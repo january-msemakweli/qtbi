@@ -1,0 +1,47 @@
+
+R version 4.5.3 (2026-03-11 ucrt) -- "Reassured Reassurer"
+Copyright (C) 2026 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> library(testthat)
+> test_check("qtbi")
+Loading required package: qtbi
+qtbi - Quantum Toxic Burden Index
+
+Typical workflow:
+  1. estimate_qtbi()  encode exposures and compute QTBI
+  2. diagnose_qtbi()  review encoder diagnostics
+
+Function index:
+  estimate_qtbi                         Encode exposures and append QTBI scores to a data frame
+  diagnose_qtbi                         Synergy sensitivity and monotonicity diagnostics
+  qtbi_meta                             Retrieve chemicals, synergy, and column metadata
+  potency_weights_from_reference_doses  Derive potency weights from reference doses
+  normalize_potency_weights             Rescale potency weights to the unweighted QTBI scale
+  exposure_percentile                   Convert one exposure vector to cohort percentiles
+  percentile_matrix                     Build a percentile matrix from exposure columns
+  build_statevector                     Construct the entanglement statevector
+  qtbi_from_pcts                        Compute QTBI from a percentile matrix
+  synergy_diagnostics                   Full encoder diagnostic tables
+
+Open help for one function:
+  qtbi_help("estimate_qtbi")   or   ?estimate_qtbi
+Browse all documentation:
+  help(package = "qtbi")
+[ FAIL 0 | WARN 0 | SKIP 0 | PASS 18 ]
+> 
+> proc.time()
+   user  system elapsed 
+   2.93    0.67    4.21 

@@ -1,0 +1,129 @@
+
+R version 4.5.3 (2026-03-11 ucrt) -- "Reassured Reassurer"
+Copyright (C) 2026 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> pkgname <- "qtbi"
+> source(file.path(R.home("share"), "R", "examples-header.R"))
+> options(warn = 1)
+> options(pager = "console")
+> base::assign(".ExTimings", "qtbi-Ex.timings", pos = 'CheckExEnv')
+> base::cat("name\tuser\tsystem\telapsed\n", file=base::get(".ExTimings", pos = 'CheckExEnv'))
+> base::assign(".format_ptime",
++ function(x) {
++   if(!is.na(x[4L])) x[1L] <- x[1L] + x[4L]
++   if(!is.na(x[5L])) x[2L] <- x[2L] + x[5L]
++   options(OutDec = '.')
++   format(x[1L:3L], digits = 7L)
++ },
++ pos = 'CheckExEnv')
+> 
+> ### * </HEADER>
+> library('qtbi')
+> 
+> base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+> base::assign(".old_wd", base::getwd(), pos = 'CheckExEnv')
+> cleanEx()
+> nameEx("estimate_qtbi")
+> ### * estimate_qtbi
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: estimate_qtbi
+> ### Title: Estimate QTBI and append scores to a data frame
+> ### Aliases: estimate_qtbi
+> 
+> ### ** Examples
+> 
+> df <- data.frame(
++   Pb = c(1, 2, 3, 4),
++   As = c(4, 3, 2, 1),
++   Cd = c(2, 2, 3, 3),
++   Hg = c(1, 3, 2, 4)
++ )
+> out <- estimate_qtbi(
++   df,
++   chemicals = c("Pb", "As", "Cd", "Hg"),
++   synergy_strength = 0.6,
++   reference_doses = c(Pb = 6.3e-4, As = 6.0e-5, Cd = 5.0e-4, Hg = 1.0e-4),
++   reference_index = "Pb"
++ )
+> out$qtbi
+[1] 2.939854 3.416957 3.363347 2.961544
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("estimate_qtbi", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("qtbi_help")
+> ### * qtbi_help
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: qtbi_help
+> ### Title: Package help index for qtbi
+> ### Aliases: qtbi_help
+> 
+> ### ** Examples
+> 
+> qtbi_help()
+qtbi - Quantum Toxic Burden Index
+
+Typical workflow:
+  1. estimate_qtbi()  encode exposures and compute QTBI
+  2. diagnose_qtbi()  review encoder diagnostics
+
+Function index:
+  estimate_qtbi                         Encode exposures and append QTBI scores to a data frame
+  diagnose_qtbi                         Synergy sensitivity and monotonicity diagnostics
+  qtbi_meta                             Retrieve chemicals, synergy, and column metadata
+  potency_weights_from_reference_doses  Derive potency weights from reference doses
+  normalize_potency_weights             Rescale potency weights to the unweighted QTBI scale
+  exposure_percentile                   Convert one exposure vector to cohort percentiles
+  percentile_matrix                     Build a percentile matrix from exposure columns
+  build_statevector                     Construct the entanglement statevector
+  qtbi_from_pcts                        Compute QTBI from a percentile matrix
+  synergy_diagnostics                   Full encoder diagnostic tables
+
+Open help for one function:
+  qtbi_help("estimate_qtbi")   or   ?estimate_qtbi
+Browse all documentation:
+  help(package = "qtbi")
+> qtbi_help("estimate_qtbi")
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("qtbi_help", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> ### * <FOOTER>
+> ###
+> cleanEx()
+> options(digits = 7L)
+> base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
+Time elapsed:  0.39 0 0.59 NA NA 
+> grDevices::dev.off()
+null device 
+          1 
+> ###
+> ### Local variables: ***
+> ### mode: outline-minor ***
+> ### outline-regexp: "\\(> \\)?### [*]+" ***
+> ### End: ***
+> quit('no')
