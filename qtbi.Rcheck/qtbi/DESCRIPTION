@@ -19,7 +19,7 @@ Depends: R (>= 4.1.0)
 Suggests: testthat (>= 3.0.0)
 Config/testthat/edition: 3
 NeedsCompilation: no
-Packaged: 2026-06-04 13:00:45 UTC; msema
+Packaged: 2026-06-04 16:02:34 UTC; msema
 Author: January G. Msemakweli [aut, cre]
 Maintainer: January G. Msemakweli <jmsemak1@jh.edu>
-Built: R 4.5.3; ; 2026-06-04 13:01:21 UTC; windows
+Built: R 4.5.3; ; 2026-06-04 16:02:58 UTC; windows
